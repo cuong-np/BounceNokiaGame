@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
-    public static int MaxLevel = 7;
+public class GameManager : MonoBehaviour
+{
+    public static int MaxLevel = 6;
     public static int PlayerLife = 3;
-    public static int Level = 1;
+    public static int Level = 0;
     public Text LifeText;
     public Text RingText;
     public Slider TimeSlider;
@@ -16,15 +17,16 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public int CurrentRing;
 
-	// Use this for initialization
+    // Use this for initialization
 
 
-	void Start () {
+    void Start()
+    {
         CurrentRing = 0;
         UpdateLifeText();
         UpdateRingText();
     }
-	
+
     public void UpdateLifeText()
     {
         LifeText.text = "X" + PlayerLife.ToString();
@@ -51,6 +53,6 @@ public class GameManager : MonoBehaviour {
     public void GotoNextLevel()
     {
         Level++;
-        SceneManager.LoadScene(Level);
+        SceneManager.LoadScene(Level % MaxLevel);
     }
 }

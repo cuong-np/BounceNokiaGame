@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour
         _GameManager.UpdateLifeText();
         ChangeState(m_OldState);
         transform.position = SpawnPoint;
-        ReSet();    
+        ReSetPlayer();    
         GetComponent<CameraFindRoom>().ListRoom.Clear();
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour
         m_PowerGravityTime += Time.deltaTime;
     }
 
-    void ReSet()
+    void ReSetPlayer()
     {
         m_SpeedTime = EXTRA_TIME;
         m_JumpTime = EXTRA_TIME;
