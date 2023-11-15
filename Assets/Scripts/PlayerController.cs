@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
+
     public enum State
     {
         Normal, Big, Die
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         m_R2D = GetComponent<Rigidbody2D>();
         m_Bound = GetComponent<CircleCollider2D>();
         m_IsAcsimet = false;
-        if(StartState==State.Normal)
+        if (StartState == State.Normal)
         {
             Big.SetActive(false);
             Normal.SetActive(true);
@@ -87,8 +87,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
 
-        float maxSpeed = (m_R2D.drag != 0 ? 0.7f * (MaxSpeed+ m_ExtraSpeed) : (MaxSpeed + m_ExtraSpeed));
-        m_R2D.velocity += new Vector2(m_Move * Time.fixedDeltaTime * maxSpeed*2, 0);
+        float maxSpeed = (m_R2D.drag != 0 ? 0.7f * (MaxSpeed + m_ExtraSpeed) : (MaxSpeed + m_ExtraSpeed));
+        m_R2D.velocity += new Vector2(m_Move * Time.fixedDeltaTime * maxSpeed * 2, 0);
         if (Mathf.Abs(m_R2D.velocity.x) > maxSpeed)
             m_R2D.velocity = new Vector2(maxSpeed * m_Move, m_R2D.velocity.y);
 
@@ -125,11 +125,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space) && Find.IsGround &&
            (m_JumpTime > COOLDOWN_JUMP && m_State != State.Die))
+        {
             Jump();
+        }
         if (Input.GetKeyUp(KeyCode.Space))
         {
             m_IsGravityPower = false;
-            if(!m_IsAcsimet)
+            if (!m_IsAcsimet)
                 m_R2D.gravityScale = 1;
         }
     }
@@ -199,7 +201,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        switch(other.tag)
+        switch (other.tag)
         {
             case "CheckPoint":
                 SpawnPoint = other.gameObject.transform.position;
@@ -222,13 +224,13 @@ public class PlayerController : MonoBehaviour
                 _GameManager.GotoNextLevel();
                 break;
         }
-        
+
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Water")
-            m_R2D.drag = 0;    
+            m_R2D.drag = 0;
     }
     void TouchItem(Collision2D other)
     {
@@ -266,7 +268,7 @@ public class PlayerController : MonoBehaviour
         _GameManager.UpdateLifeText();
         ChangeState(m_OldState);
         transform.position = SpawnPoint;
-        ReSetPlayer();    
+        ReSetPlayer();
         GetComponent<CameraFindRoom>().ListRoom.Clear();
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
@@ -280,7 +282,7 @@ public class PlayerController : MonoBehaviour
         if (m_PowerGravityTime > EXTRA_TIME && !m_IsAcsimet)
             m_R2D.gravityScale = 1;
         //
-        float time = Mathf.Max(EXTRA_TIME - m_SpeedTime, EXTRA_TIME  - m_ExtraJumpTime, EXTRA_TIME  - m_PowerGravityTime, 0);
+        float time = Mathf.Max(EXTRA_TIME - m_SpeedTime, EXTRA_TIME - m_ExtraJumpTime, EXTRA_TIME - m_PowerGravityTime, 0);
         _GameManager.UpdateSlider(time);
     }
 
@@ -288,8 +290,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isAcsimet && m_State == State.Big)
         {
-            if(!m_IsGravityPower)
-                 m_R2D.gravityScale = -AcsimetScale;
+            if (!m_IsGravityPower)
+                m_R2D.gravityScale = -AcsimetScale;
         }
         else
         {

@@ -21,6 +21,10 @@ public class FindGrounded : MonoBehaviour {
         transform.rotation = rotation;
     }
 
+    public void SetGround(bool ground)
+    {
+        IsGround = ground;
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag != "Player" && other.tag!="CheckPoint" && other.tag!="Room" && other.tag!="FindRoom")
@@ -31,36 +35,36 @@ public class FindGrounded : MonoBehaviour {
         }
         if (other.tag == "Ground" || other.tag == "Item" || other.tag == "Ring")
         {
-            IsGround = true;
+            SetGround(true);
         }
         if (other.tag == "BounceGround")
         {
             IsGroundBounce = true;
-            IsGround = true;
+            SetGround(true);
         }
-        
+
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Ground" || other.tag == "Item" || other.tag == "Ring")
         {
-            IsGround = true;
+            SetGround(true);
         }
         if (other.tag == "BounceGround")
         {
             IsGroundBounce = true;
-            IsGround = true;
+            SetGround(true);
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Ground" || other.tag == "Item" || other.tag == "Ring")
-            IsGround = false;
+            SetGround(false);
         if (other.tag == "BounceGround")
         {
             IsGroundBounce = false;
-            IsGround = false;
+            SetGround(false);
         }
     }
 
